@@ -1,0 +1,22 @@
+{
+  "name": "wa-sticker-bot",
+  "version": "1.0.0",
+  "description": "Whatsapp Sticker Bot",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node ./src/bot.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rama Aditya Saputra",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "indonesian-badwords": "^1.0.1",
+    "qrcode-terminal": "^0.12.0",
+    "remove.bg": "^1.3.0",
+    "whatsapp-web.js": "^1.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}

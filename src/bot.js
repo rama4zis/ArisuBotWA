@@ -8,6 +8,15 @@ const client = new Client({
 
 require('dotenv').config()
 const fs = require('fs')
+const { setTimeout } = require("timers/promises");
+
+const { Configuration, OpenAIApi } = require("openai");
+
+const configuration = new Configuration({
+    organization: process.env.OPENAI_ORG,
+    apiKey: process.env.OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(configuration);
 
 const qrcode = require('qrcode-terminal')
 const badwords = require("indonesian-badwords");
@@ -152,6 +161,7 @@ client.on('message', async (msg) => {
         *!info* - Menampilkan informasi bot
         *!sticker* - Kirim gambar sebagai sticker
         *!image/removebg* - Menghapus background gambar
+        *!tanyaArisu* - Menanyakan kepada Arisu dengan hasil jawaban OpenAI
         `
 
         client.sendMessage(msg.from, commands)
@@ -162,6 +172,7 @@ client.on('message', async (msg) => {
     }
 
     // Command switch
+    // let validationForAsk = false
     switch (msg.body) {
 
         case '!ping':
@@ -239,11 +250,47 @@ client.on('message', async (msg) => {
 
             break;
 
+        case '!tanyaArisu':
+            client.sendMessage(msg.from, 'Tanyakan apapun ke Arisu, Arisu akan menjawabnya!')
+            // .then(() => {
+
+            validationForAsk = true
+            tanyaArisu = true
+
+            console.log('tanya arisu section, validationForAsk: ' + validationForAsk)
+            client.on('message', async (msg) => {
+                if (tanyaArisu) {
+                    const response = await openai.createCompletion({
+                        model: "text-davinci-003",
+                        prompt: msg.body,
+                        temperature: 0,
+                        max_tokens: 100,
+                    });
+
+                    // await setTimeout(5000);
+
+
+                    console.log(response.data.choices);
+
+                    client.sendMessage(msg.from, response.data.choices[0].text)
+                    tanyaArisu = false
+                }
+            })
+
+            // })
+            break;
+
         case '!interact':
             client.sendMessage(msg.from, 'Arisu masih mengembangkan fitur ini, tunggu update selanjutnya ya!')
             break;
 
         default:
+            console.log('default section, validationForAsk: ' + validationForAsk)
+            if (validationForAsk) {
+                validationForAsk = false
+                return
+            }
+
             client.sendMessage(msg.from, "Maaf, Arisu belum paham dengan apa yang kamu katakan, ketik *!help* untuk melihat command yang tersedia")
             break;
 

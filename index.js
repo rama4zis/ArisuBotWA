@@ -26,6 +26,7 @@ const { setTimeout } = require('timers');
 
 client.on('qr', (qr) => {
     qrcode.generate(qr, { small: true })
+    console.log('Alternative QR RECEIVED : ', qr)
 })
 
 client.on('ready', async () => {

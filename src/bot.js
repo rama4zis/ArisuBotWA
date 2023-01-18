@@ -1,4 +1,4 @@
-const { Client, LocalAuth, MessageMedia } = require('whatsapp-web.js')
+const { Client, LocalAuth, MessageMedia, Message } = require('whatsapp-web.js')
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
@@ -8,7 +8,6 @@ const client = new Client({
 
 require('dotenv').config()
 const fs = require('fs')
-const { setTimeout } = require("timers/promises");
 
 const { Configuration, OpenAIApi } = require("openai");
 
@@ -20,7 +19,8 @@ const openai = new OpenAIApi(configuration);
 
 const qrcode = require('qrcode-terminal')
 const badwords = require("indonesian-badwords");
-const { RemoveBgResult, RemoveBgError, removeBackgroundFromImageFile } = require("remove.bg");
+const { RemoveBgResult, RemoveBgError, removeBackgroundFromImageBase64, removeBackgroundFromImageFile } = require("remove.bg");
+const { setTimeout } = require('timers');
 
 
 client.on('qr', (qr) => {
@@ -57,7 +57,7 @@ client.initialize()
 //         sendAudioAsVoice: true
 //     })
 // })
-
+let validationForAsk = false
 client.on('message', async (msg) => {
 
     // debug 
@@ -160,8 +160,8 @@ client.on('message', async (msg) => {
         *!ping* - Cek apakah bot online
         *!info* - Menampilkan informasi bot
         *!sticker* - Kirim gambar sebagai sticker
-        *!image/removebg* - Menghapus background gambar
-        *!tanyaArisu* - Menanyakan kepada Arisu dengan hasil jawaban OpenAI
+        *!rmbg* - Remove background pada gambar
+        *!arisu {Pertanyaan}* - Menanyakan kepada Arisu dengan hasil jawaban OpenAI(BETA)
         `
 
         client.sendMessage(msg.from, commands)
@@ -172,14 +172,14 @@ client.on('message', async (msg) => {
     }
 
     // Command switch
-    // let validationForAsk = false
-    switch (msg.body) {
 
-        case '!ping':
+    switch (true) {
+
+        case msg.body === '!ping':
             msg.reply('pong');
             break;
 
-        case '!info':
+        case msg.body === '!info':
             let info = `
             *Arisu*
             *Version:* 0.1.0
@@ -196,7 +196,7 @@ client.on('message', async (msg) => {
             client.sendMessage(msg.from, info)
             break;
 
-        case '!sticker':
+        case msg.body === '!sticker':
 
             if (msg.hasMedia) {
                 const media = await msg.downloadMedia();
@@ -209,7 +209,7 @@ client.on('message', async (msg) => {
             }
             break;
 
-        case '!image/removebg':
+        case msg.body === '!rmbg':
             if (msg.hasMedia) {
                 const media = await msg.downloadMedia();
 
@@ -226,7 +226,7 @@ client.on('message', async (msg) => {
                 const filePath = "./assets/image/result.jpg"
 
 
-                const RemoveBgResult = await removeBackgroundFromImageFile({
+                await removeBackgroundFromImageFile({
                     path: filePath,
                     apiKey: process.env.REMOVE_BG_API_KEY,
                     size: "auto",
@@ -243,54 +243,43 @@ client.on('message', async (msg) => {
                     sendMediaAsDocument: true,
                 })
 
-                // then remove image from local 
+                // then remove image from local storage
                 fs.unlinkSync(filePath)
                 fs.unlinkSync(exportMedia)
             }
 
             break;
 
-        case '!tanyaArisu':
-            client.sendMessage(msg.from, 'Tanyakan apapun ke Arisu, Arisu akan menjawabnya!')
-            // .then(() => {
+        case msg.body.startsWith('!arisu'):
+            client.sendMessage(msg.from, 'Tunggu sebentar, Arisu sedang mengetik!')
 
-            validationForAsk = true
-            tanyaArisu = true
+            var resultMsg = msg.body.substr(msg.body.indexOf(" ") + 1);
 
-            console.log('tanya arisu section, validationForAsk: ' + validationForAsk)
-            client.on('message', async (msg) => {
-                if (tanyaArisu) {
-                    const response = await openai.createCompletion({
-                        model: "text-davinci-003",
-                        prompt: msg.body,
-                        temperature: 0,
-                        max_tokens: 100,
-                    });
+            if (resultMsg === '!arisu' || resultMsg === ' ' || resultMsg === '' || resultMsg === null || resultMsg === undefined) {
+                client.sendMessage(msg.from, 'Kamu gak tanya apa apa ke Arisu, jadi Arisu gabisa jawab!')
+                return
+            }
 
-                    // await setTimeout(5000);
+            setTimeout( async () => {
+                const answer = await openai.createCompletion({
+                    model: "text-davinci-003",
+                    prompt: resultMsg,
+                    max_tokens: 250,
+                    temperature: 0,
+                })
 
+                console.log(answer.data.choices[0].text)
 
-                    console.log(response.data.choices);
+                client.sendMessage(msg.from, answer.data.choices[0].text)
+            }, 3000);
 
-                    client.sendMessage(msg.from, response.data.choices[0].text)
-                    tanyaArisu = false
-                }
-            })
-
-            // })
             break;
 
-        case '!interact':
+        case msg.body === '!interact':
             client.sendMessage(msg.from, 'Arisu masih mengembangkan fitur ini, tunggu update selanjutnya ya!')
             break;
 
         default:
-            console.log('default section, validationForAsk: ' + validationForAsk)
-            if (validationForAsk) {
-                validationForAsk = false
-                return
-            }
-
             client.sendMessage(msg.from, "Maaf, Arisu belum paham dengan apa yang kamu katakan, ketik *!help* untuk melihat command yang tersedia")
             break;
 

@@ -1,6 +1,6 @@
-const { Client, NoAuth, MessageMedia } = require('whatsapp-web.js')
+const { Client, LocalAuth, MessageMedia } = require('whatsapp-web.js')
 const client = new Client({
-    authStrategy: new NoAuth(),
+    authStrategy: new LocalAuth(),
     puppeteer: {
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
         ignoreHTTPSErrors: true,

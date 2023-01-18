@@ -1,10 +1,12 @@
-const { Client, LocalAuth, MessageMedia, Message } = require('whatsapp-web.js')
+const { Client, NoAuth, MessageMedia } = require('whatsapp-web.js')
 const client = new Client({
-    authStrategy: new LocalAuth(),
-    // puppeteer: {
-    //     executablePath: 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
-    // }
-})
+    authStrategy: new NoAuth(),
+    puppeteer: {
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        ignoreHTTPSErrors: true,
+        dumpio: false
+    }
+});
 
 require('dotenv').config()
 const fs = require('fs')
@@ -19,9 +21,8 @@ const openai = new OpenAIApi(configuration);
 
 const qrcode = require('qrcode-terminal')
 const badwords = require("indonesian-badwords");
-const { RemoveBgResult, RemoveBgError, removeBackgroundFromImageBase64, removeBackgroundFromImageFile } = require("remove.bg");
+const { RemoveBgResult, RemoveBgError, removeBackgroundFromImageFile } = require("remove.bg");
 const { setTimeout } = require('timers');
-
 
 client.on('qr', (qr) => {
     qrcode.generate(qr, { small: true })
@@ -46,26 +47,11 @@ client.on('ready', async () => {
     }
 })
 
-
-
 client.initialize()
 
-// Check for first message 
-// client.on('message_create', async (msg) => {
-//     let greating = MessageMedia.fromFilePath('./assets/sound/Arisu_Login_1.mp3')
-//     await client.sendMessage(msg.from, greating, {
-//         sendAudioAsVoice: true
-//     })
-// })
-let validationForAsk = false
 client.on('message', async (msg) => {
 
-    // debug 
-    // console.log(msg)
-
     let message = msg.body.toLowerCase()
-
-
 
     // bad words check 
     if (badwords.analyze(message).count > 0) {
@@ -78,10 +64,10 @@ client.on('message', async (msg) => {
             sendAudioAsVoice: true
         })
 
-        const mediaVideo = MessageMedia.fromFilePath('./assets/arisuEX.mp4')
-        client.sendMessage(msg.from, mediaVideo, {
-            sendVideoAsGif: true
-        })
+        // const mediaVideo = MessageMedia.fromFilePath('./assets/arisuEX.mp4')
+        // client.sendMessage(msg.from, mediaVideo, {
+        //     sendVideoAsGif: true
+        // })
 
         return
     }
@@ -150,8 +136,6 @@ client.on('message', async (msg) => {
         return
     }
 
-
-
     // Show commands
     if (message.includes('!help')) {
 
@@ -175,7 +159,6 @@ client.on('message', async (msg) => {
     }
 
     // Command switch
-
     switch (true) {
 
         case msg.body === '!ping':
@@ -268,7 +251,7 @@ client.on('message', async (msg) => {
                 return
             }
 
-            setTimeout( async () => {
+            setTimeout(async () => {
                 const answer = await openai.createCompletion({
                     model: "text-davinci-003",
                     prompt: resultMsg,

@@ -215,17 +215,21 @@ client.on('message', async (msg) => {
 
                 const filePath = "./assets/image/result.jpg"
 
+                async function myRemoveBgFunction() {
 
-                await removeBackgroundFromImageFile({
-                    path: filePath,
-                    apiKey: process.env.REMOVE_BG_API_KEY,
-                    size: "auto",
-                    type: "person",
-                    crop: false,
-                    scale: "original",
-                    format: "png",
-                    outputFile: "./assets/image/hasilEditArisu.png",
-                });
+                    await removeBackgroundFromImageFile({
+                        path: filePath,
+                        apiKey: process.env.REMOVE_BG_API_KEY,
+                        size: "auto",
+                        type: "person",
+                        crop: false,
+                        scale: "original",
+                        format: "png",
+                        outputFile: "./assets/image/hasilEditArisu.png",
+                    });
+                }
+
+                myRemoveBgFunction()
 
                 const exportMedia = MessageMedia.fromFilePath("./assets/image/hasilEditArisu.png")
 

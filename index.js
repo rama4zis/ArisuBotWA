@@ -2,10 +2,8 @@ const { Client, LocalAuth, MessageMedia } = require('whatsapp-web.js')
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
-        ignoreHTTPSErrors: true,
-        dumpio: false
-    }
+        args: [ '--no-sandbox', '--disable-setuid-sandbox' ]
+    },
 });
 
 require('dotenv').config()
@@ -52,26 +50,32 @@ client.initialize()
 
 client.on('message', async (msg) => {
 
-    let message = msg.body.toLowerCase()
-
-    // bad words check 
-    if (badwords.analyze(message).count > 0) {
-        // console.log(badwords.analyze(message))
-
-        client.sendMessage(msg.from, 'Arisu tidak suka dengan kata-kata kasar, jangan kasar ya! 😠👊')
-
-        const media = MessageMedia.fromFilePath('./assets/sound/Arisu_ExSkill_Level_3.mp3')
-        client.sendMessage(msg.from, media, {
-            sendAudioAsVoice: true
-        })
-
-        // const mediaVideo = MessageMedia.fromFilePath('./assets/arisuEX.mp4')
-        // client.sendMessage(msg.from, mediaVideo, {
-        //     sendVideoAsGif: true
-        // })
-
-        return
+    let message = ''
+    if (msg.type === 'chat') {
+        message = msg.body.toLowerCase()
     }
+    // bad words check 
+    // console.log(msg)
+    if (msg.type !== 'image') {
+        if (badwords.analyze(message).count > 0) {
+            // console.log(badwords.analyze(message))
+
+            client.sendMessage(msg.from, 'Arisu tidak suka dengan kata-kata kasar, jangan kasar ya! 😠👊')
+
+            const media = MessageMedia.fromFilePath('./assets/sound/Arisu_ExSkill_Level_3.mp3')
+            client.sendMessage(msg.from, media, {
+                sendAudioAsVoice: true
+            })
+
+            // const mediaVideo = MessageMedia.fromFilePath('./assets/arisuEX.mp4')
+            // client.sendMessage(msg.from, mediaVideo, {
+            //     sendVideoAsGif: true
+            // })
+
+            return
+        }
+    }
+
 
     // Hello commands 
     if (message.includes('halo') || message.includes('hai') || message.includes('hi') || message.includes('hello')) {

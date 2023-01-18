@@ -2,7 +2,7 @@ const { Client, LocalAuth, MessageMedia } = require('whatsapp-web.js')
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
-        args: [ '--no-sandbox', '--disable-setuid-sandbox' ]
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
     },
 });
 
@@ -19,7 +19,7 @@ const openai = new OpenAIApi(configuration);
 
 const qrcode = require('qrcode-terminal')
 const badwords = require("indonesian-badwords");
-const { RemoveBgResult, RemoveBgError, removeBackgroundFromImageFile } = require("remove.bg");
+const { RemoveBgResult, RemoveBgError, removeBackgroundFromImageFile, removeBackgroundFromImageBase64 } = require("remove.bg");
 const { setTimeout } = require('timers');
 
 client.on('qr', (qr) => {
@@ -223,20 +223,6 @@ client.on('message', async (msg) => {
                 // client.sendMessage(msg.from, media)
                 // return
 
-                async function myRemoveBgFunction() {
-
-                    await removeBackgroundFromImageFile({
-                        path: filePath,
-                        apiKey: process.env.REMOVE_BG_API_KEY,
-                        size: "auto",
-                        type: "person",
-                        crop: false,
-                        scale: "original",
-                        format: "png",
-                        outputFile: "./assets/image/hasilEditArisu.png",
-                    });
-                }
-
                 try {
                     await removeBackgroundFromImageFile({
                         path: filePath,
@@ -269,6 +255,39 @@ client.on('message', async (msg) => {
             }
 
             break;
+
+        case msg.body === '!rmbg2':
+            if (msg.hasMedia && msg.type === 'image' && msg.type !== 'video' && msg.type !== 'gif') {
+
+                const media = await msg.downloadMedia();
+
+                let base64 = media.data
+                // remove background
+                try {
+                    const result = await removeBackgroundFromImageBase64({
+                        base64,
+                        apiKey: process.env.REMOVE_BG_API_KEY,
+                        size: "auto",
+                        type: "person",
+                        crop: false,
+                        scale: "original",
+                        format: "png",
+                    });
+
+                    // console.log(result)
+                    client.sendMessage(msg.from, result, {
+                        sendMediaAsDocument: true,
+                    })
+                    console.log('Image sent')
+                } catch (error) {
+                    console.log(error)
+                    return
+                }
+
+            } else {
+                client.sendMessage(msg.from, 'Arisu hanya menerima gambar saja, bukan file lainnya!')
+            }
+            break
 
         case msg.body.startsWith('!arisu'):
             client.sendMessage(msg.from, 'Tunggu sebentar, Arisu sedang mengetik!')

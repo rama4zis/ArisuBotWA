@@ -200,7 +200,7 @@ client.on('message', async (msg) => {
 
         case msg.body === '!rmbg':
             if (msg.hasMedia && msg.type === 'image' && msg.type !== 'video' && msg.type !== 'gif') {
-                const media = await msg.downloadMedia();
+                let media = await msg.downloadMedia();
 
                 // save image to local
                 try {
@@ -214,6 +214,10 @@ client.on('message', async (msg) => {
                 }
 
                 const filePath = "./assets/image/result.jpg"
+                media = MessageMedia.fromFilePath(filePath)
+                // console.log(media)
+                // client.sendMessage(msg.from, media)
+                // return
 
                 async function myRemoveBgFunction() {
 
@@ -229,13 +233,29 @@ client.on('message', async (msg) => {
                     });
                 }
 
-                myRemoveBgFunction()
+                try {
+                    await removeBackgroundFromImageFile({
+                        path: filePath,
+                        apiKey: process.env.REMOVE_BG_API_KEY,
+                        size: "auto",
+                        type: "person",
+                        crop: false,
+                        scale: "original",
+                        format: "png",
+                        outputFile: "./assets/image/hasilEditArisu.png",
+                    });
 
-                const exportMedia = MessageMedia.fromFilePath("./assets/image/hasilEditArisu.png")
+                    const exportMedia = MessageMedia.fromFilePath("./assets/image/hasilEditArisu.png")
 
-                client.sendMessage(msg.from, exportMedia, {
-                    sendMediaAsDocument: true,
-                })
+                    client.sendMessage(msg.from, exportMedia, {
+                        sendMediaAsDocument: true,
+                    })
+                } catch (error) {
+                    console.log(error)
+
+                    client.sendMessage(msg.from, 'Contrast: Images taken under good lighting conditions and with a high contrast between foreground and background give better results.')
+                    return
+                }
 
                 // then remove image from local storage
                 // fs.unlinkSync(filePath)

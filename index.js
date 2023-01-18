@@ -1,9 +1,9 @@
 const { Client, LocalAuth, MessageMedia, Message } = require('whatsapp-web.js')
 const client = new Client({
     authStrategy: new LocalAuth(),
-    puppeteer: {
-        executablePath: 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
-    }
+    // puppeteer: {
+    //     executablePath: 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
+    // }
 })
 
 require('dotenv').config()

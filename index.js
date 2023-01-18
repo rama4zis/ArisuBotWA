@@ -93,7 +93,7 @@ client.on('message', async (msg) => {
     }
 
     // lagi apa commands
-    if (message.includes('lagi apa') || message.includes('lagi ngapain') || message.includes('lagi ngapain?')) {
+    if (message.includes('lagi apa') || message.includes('lagi ngapain') || message.includes('lagi ngapain?') || message.includes('lagi apa?') || message.includes('ngapain kamu') || message.includes('kamu ngapain?') || message.includes('ngapain')) {
 
         const random = Math.floor(Math.random() * 3)
 
@@ -162,6 +162,9 @@ client.on('message', async (msg) => {
         *!sticker* - Kirim gambar sebagai sticker
         *!rmbg* - Remove background pada gambar
         *!arisu {Pertanyaan}* - Menanyakan kepada Arisu dengan hasil jawaban OpenAI(BETA)
+
+        - Jangan berkata kotor
+        - Kamu bisa tanya arisu lagi ngapain
         `
 
         client.sendMessage(msg.from, commands)
@@ -198,19 +201,21 @@ client.on('message', async (msg) => {
 
         case msg.body === '!sticker':
 
-            if (msg.hasMedia) {
+            if (msg.hasMedia && msg.type === 'image' && msg.type !== 'video' && msg.type !== 'gif') {
                 const media = await msg.downloadMedia();
 
                 client.sendMessage(msg.from, media, {
                     sendMediaAsSticker: true,
-                    stickerAuthor: 'Arisu Bukan BOT',
+                    stickerAuthor: 'Arisu',
                 })
 
+            } else {
+                client.sendMessage(msg.from, 'Kirim gambar yang bener dong')
             }
             break;
 
         case msg.body === '!rmbg':
-            if (msg.hasMedia) {
+            if (msg.hasMedia && msg.type === 'image' && msg.type !== 'video' && msg.type !== 'gif') {
                 const media = await msg.downloadMedia();
 
                 // save image to local
@@ -221,6 +226,7 @@ client.on('message', async (msg) => {
                     // console.log('Image saved to local')
                 } catch (error) {
                     console.log(error)
+                    return
                 }
 
                 const filePath = "./assets/image/result.jpg"
@@ -244,8 +250,10 @@ client.on('message', async (msg) => {
                 })
 
                 // then remove image from local storage
-                fs.unlinkSync(filePath)
-                fs.unlinkSync(exportMedia)
+                // fs.unlinkSync(filePath)
+                // fs.unlinkSync(exportMedia)
+            } else {
+                client.sendMessage(msg.from, 'Arisu hanya menerima gambar saja, bukan file lainnya!')
             }
 
             break;

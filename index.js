@@ -199,13 +199,12 @@ client.on('message', async (msg) => {
         *!info* - Menampilkan informasi bot
         *!sticker* - Kirim gambar sebagai sticker
         *!rmbg* - Remove background pada gambar
-        *!arisu {Pertanyaan}* - Menanyakan kepada Arisu dengan hasil jawaban OpenAI(BETA)
         *!mood* - Menampilkan mood Arisu saat ini
 
 
         - Jangan berkata kotor (coba aja deh)
         - Kamu bisa tanya arisu lagi ngapain
-        - Langsung ngobrol aja
+        - Langsung ngobrol aja (Jawaban yang didapat dari OpenAI)
         `
 
         client.sendMessage(msg.from, commands)
@@ -308,31 +307,6 @@ client.on('message', async (msg) => {
             } else {
                 client.sendMessage(msg.from, 'Arisu hanya menerima gambar saja, bukan file lainnya!')
             }
-
-            break;
-
-        case msg.body.startsWith('!arisu'):
-            client.sendMessage(msg.from, 'Tunggu sebentar, Arisu sedang mengetik!')
-
-            var resultMsg = msg.body.substr(msg.body.indexOf(" ") + 1);
-
-            if (resultMsg === '!arisu' || resultMsg === ' ' || resultMsg === '' || resultMsg === null || resultMsg === undefined) {
-                client.sendMessage(msg.from, 'Kamu gak tanya apa apa ke Arisu, jadi Arisu gabisa jawab!')
-                return
-            }
-
-            setTimeout(async () => {
-                const answer = await openai.createCompletion({
-                    model: "text-davinci-003",
-                    prompt: resultMsg,
-                    max_tokens: 250,
-                    temperature: 0,
-                })
-
-                console.log(answer.data.choices[0].text)
-
-                client.sendMessage(msg.from, answer.data.choices[0].text)
-            }, 3000);
 
             break;
 

@@ -37,7 +37,7 @@ client.on('ready', async () => {
         console.log('Nama gagal diubah')
     }
 
-    let newStatus = client.setStatus('Arisu Status: Online')
+    let newStatus = client.setStatus('!help || !menu untuk melihat list command, bila Arisu tidak menjawab, maka kemungkinan dia sedang tidur')
 
     if (newStatus) {
         console.log('Status telah diubah')
@@ -74,7 +74,7 @@ client.on('message', async (msg) => {
     const dataFromId = (id) => {
 
         let totalData = (readDataMessageJSON()).data
-        
+
 
     }
 
@@ -340,12 +340,19 @@ client.on('message', async (msg) => {
             client.sendMessage(msg.from, 'Arisu masih mengembangkan fitur ini, tunggu update selanjutnya ya!')
             break;
 
+        case msg.body === '!resetAdmin':
+
+            tempChat = "Arisu is a chatbot bahasa Indonesia that reluctantly answers questions with sarcastic responses:\n\nSensei: "
+            client.sendMessage(msg.from, 'Arisu sudah menghapus history chatnya')
+
+            break
+
         default:
 
             if (true) {
 
                 let chatHistory = readDataMessageJSON()
-                
+
 
                 let tempMsg = msg.body + '\n'
                 tempChat = tempChat + tempMsg + '\nArisu: '

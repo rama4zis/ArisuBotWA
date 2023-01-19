@@ -8,7 +8,7 @@ const client = new Client({
 
 require('dotenv').config()
 const fs = require('fs')
-
+const { encode, decode } = require('node-base64-image')
 const { Configuration, OpenAIApi } = require("openai");
 
 const configuration = new Configuration({
@@ -56,7 +56,7 @@ client.on('message', async (msg) => {
     }
     // bad words check 
     // console.log(msg)
-    if (msg.type !== 'image') {
+    if (msg.type !== 'image' && !msg.hasMedia) {
         if (badwords.analyze(message).count > 0) {
             // console.log(badwords.analyze(message))
 
@@ -78,7 +78,7 @@ client.on('message', async (msg) => {
 
 
     // Hello commands 
-    if (message.includes('halo') || message.includes('hai') || message.includes('hi') || message.includes('hello')) {
+    if (message.body('halo arisu')) {
         msg.reply('Halo juga!')
         return
     }
@@ -219,9 +219,6 @@ client.on('message', async (msg) => {
 
                 const filePath = "./assets/image/result.jpg"
                 media = MessageMedia.fromFilePath(filePath)
-                // console.log(media)
-                // client.sendMessage(msg.from, media)
-                // return
 
                 try {
                     await removeBackgroundFromImageFile({
@@ -255,39 +252,6 @@ client.on('message', async (msg) => {
             }
 
             break;
-
-        case msg.body === '!rmbg2':
-            if (msg.hasMedia && msg.type === 'image' && msg.type !== 'video' && msg.type !== 'gif') {
-
-                const media = await msg.downloadMedia();
-
-                let base64 = media.data
-                // remove background
-                try {
-                    const result = await removeBackgroundFromImageBase64({
-                        base64,
-                        apiKey: process.env.REMOVE_BG_API_KEY,
-                        size: "auto",
-                        type: "person",
-                        crop: false,
-                        scale: "original",
-                        format: "png",
-                    });
-
-                    // console.log(result)
-                    client.sendMessage(msg.from, result, {
-                        sendMediaAsDocument: true,
-                    })
-                    console.log('Image sent')
-                } catch (error) {
-                    console.log(error)
-                    return
-                }
-
-            } else {
-                client.sendMessage(msg.from, 'Arisu hanya menerima gambar saja, bukan file lainnya!')
-            }
-            break
 
         case msg.body.startsWith('!arisu'):
             client.sendMessage(msg.from, 'Tunggu sebentar, Arisu sedang mengetik!')

@@ -37,7 +37,7 @@ client.on('ready', async () => {
         console.log('Nama gagal diubah')
     }
 
-    let newStatus = client.setStatus('Ini status baru milik Arisu')
+    let newStatus = client.setStatus('Arisu Status: Online')
 
     if (newStatus) {
         console.log('Status telah diubah')
@@ -48,7 +48,56 @@ client.on('ready', async () => {
 
 client.initialize()
 
+// let moodBot = 'neutral'
+let tempChat = "Arisu is a chatbot bahasa Indonesia that reluctantly answers questions with sarcastic responses:\n\nSensei: "
+
+
+
+
 client.on('message', async (msg) => {
+
+    const readDataMessageJSON = () => {
+        // read JSON object from file
+        fs.readFile('messageData.json', 'utf-8', (err, data) => {
+            if (err) {
+                throw err
+            }
+
+            // parse JSON object
+            const dataJson = JSON.parse(data.toString())
+
+            // return data
+            return dataJson
+        })
+    }
+
+    const dataFromId = (id) => {
+
+        let totalData = (readDataMessageJSON()).data
+        
+
+    }
+
+    const writeDataMessageJSON = (data, id) => {
+        // if file not exist, create new file
+        if (!fs.existsSync('messageData.json')) {
+            fs.writeFileSync('messageData.json', JSON.stringify([]))
+        }
+
+        // Get current data
+        let currentData = readDataMessageJSON()
+
+        // search if id exist
+        const index = currentData.findIndex((item) => item.id === id)
+
+        // if id exist, update data
+        if (index !== -1) {
+            currentData[index] = data
+        } else {
+            // if id not exist, push data
+            currentData.push(data)
+        }
+    }
 
     let message = ''
     if (msg.type === 'chat') {
@@ -142,7 +191,7 @@ client.on('message', async (msg) => {
     }
 
     // Show commands
-    if (message.includes('!help')) {
+    if (message.includes('!help') || message.includes('!menu')) {
 
         let commands = `
         *Command List:*
@@ -151,9 +200,12 @@ client.on('message', async (msg) => {
         *!sticker* - Kirim gambar sebagai sticker
         *!rmbg* - Remove background pada gambar
         *!arisu {Pertanyaan}* - Menanyakan kepada Arisu dengan hasil jawaban OpenAI(BETA)
+        *!mood* - Menampilkan mood Arisu saat ini
 
-        - Jangan berkata kotor
+
+        - Jangan berkata kotor (coba aja deh)
         - Kamu bisa tanya arisu lagi ngapain
+        - Langsung ngobrol aja
         `
 
         client.sendMessage(msg.from, commands)
@@ -186,6 +238,12 @@ client.on('message', async (msg) => {
 
             client.sendMessage(msg.from, info)
             break;
+
+        case msg.body === '!mood':
+
+            client.sendMessage(msg.from, 'Arisu lagi mood jelek banget')
+
+            break
 
         case msg.body === '!sticker':
 
@@ -283,7 +341,38 @@ client.on('message', async (msg) => {
             break;
 
         default:
-            client.sendMessage(msg.from, "Maaf, Arisu belum paham dengan apa yang kamu katakan, ketik *!help* untuk melihat command yang tersedia")
+
+            if (true) {
+
+                let chatHistory = readDataMessageJSON()
+                
+
+                let tempMsg = msg.body + '\n'
+                tempChat = tempChat + tempMsg + '\nArisu: '
+                const response = await openai.createCompletion({
+                    model: "text-davinci-003",
+                    prompt: tempChat,
+                    temperature: 0.5,
+                    max_tokens: 60,
+                    top_p: 0.3,
+                    frequency_penalty: 0.5,
+                    presence_penalty: 0,
+                    stop: ["Sensei", "Arisu"],
+                });
+
+                tempChat = tempChat + response.data.choices[0].text + '\nSensei: '
+
+                client.sendMessage(msg.from, response.data.choices[0].text)
+                console.log('tempChat: ' + tempChat)
+                // console.log(response.data.choices)
+                // console.log(msg.from)
+                return
+            }
+
+            client.sendMessage(
+                msg.from,
+                "Karena Arisu bukan bot AI, dan Arisu masih belajar, Untuk melihat command yang tersedia ketik *!help*"
+            )
             break;
 
     }

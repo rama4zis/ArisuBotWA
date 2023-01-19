@@ -363,8 +363,9 @@ client.on('message', async (msg) => {
                 tempChat = tempChat + response.data.choices[0].text + '\nSensei: '
 
                 client.sendMessage(msg.from, response.data.choices[0].text)
-                console.log('tempChat: ' + tempChat)
-                // console.log(response.data.choices)
+                console.log('Sensei: ' + msg.body + '\n')
+                console.log('Arisu: ' + response.data.choices[0].text + '\n')
+                // console.log('tempChat: ' + tempChat)
                 // console.log(msg.from)
                 return
             }

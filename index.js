@@ -78,7 +78,7 @@ client.on('message', async (msg) => {
 
 
     // Hello commands 
-    if (message.body('halo arisu')) {
+    if (message === 'halo arisu') {
         msg.reply('Halo juga!')
         return
     }

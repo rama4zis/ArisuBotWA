@@ -2,3 +2,4 @@ node_modules
 .wwebjs_auth
 .env
 assets/image/*
+!node_modules/whatsapp-web.js/src/util/Injected.js

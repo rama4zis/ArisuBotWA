@@ -328,11 +328,7 @@ client.on('message', async (msg) => {
 
             client.sendMessage(msg.from, 'Fitur ini diganti dengan meminta Arisu mengirimkan gambar')
 
-            const response = await openai.createImage({
-                prompt: msg.body,
-                n: 1,
-                size: "512x512",
-            });
+            
 
             // console.log("total data: " + response.data.data.length)
 
@@ -341,6 +337,13 @@ client.on('message', async (msg) => {
             client.sendMessage(msg.from, 'Arisu sedang mencari gambar untukmu tunggu sebentar')
 
             try {
+
+                const response = await openai.createImage({
+                    prompt: msg.body,
+                    n: 1,
+                    size: "512x512",
+                });
+                
                 for (let i = 0; i < response.data.data.length; i++) {
                     const element = response.data.data[i];
 

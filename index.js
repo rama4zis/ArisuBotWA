@@ -21,6 +21,7 @@ const qrcode = require('qrcode-terminal')
 const badwords = require("indonesian-badwords");
 const { RemoveBgResult, RemoveBgError, removeBackgroundFromImageFile, removeBackgroundFromImageBase64 } = require("remove.bg");
 const { setTimeout } = require('timers');
+const { json } = require('express');
 
 client.on('qr', (qr) => {
     qrcode.generate(qr, { small: true })
@@ -200,7 +201,7 @@ client.on('message', async (msg) => {
         *!sticker* - Kirim gambar sebagai sticker
         *!rmbg* - Remove background pada gambar
         *!mood* - Menampilkan mood Arisu saat ini
-
+        *!arisu* {request gambar} - Request gambar apapun ke Arisu 
 
         - Jangan berkata kotor (coba aja deh)
         - Kamu bisa tanya arisu lagi ngapain
@@ -321,11 +322,49 @@ client.on('message', async (msg) => {
 
             break
 
+        case message.startsWith('!arisu'):
+
+            msg.body = msg.body.replace('!arisu', '')
+
+            client.sendMessage(msg.from, 'Fitur ini diganti dengan meminta Arisu mengirimkan gambar')
+
+            const response = await openai.createImage({
+                prompt: msg.body,
+                n: 1,
+                size: "512x512",
+            });
+
+            // console.log("total data: " + response.data.data.length)
+
+            // console.log(response.data.data)
+            // return
+            client.sendMessage(msg.from, 'Arisu sedang mencari gambar untukmu tunggu sebentar')
+
+            try {
+                for (let i = 0; i < response.data.data.length; i++) {
+                    const element = response.data.data[i];
+
+                    // console.log(element.url + '\n')
+                    const elementUrl = element.url
+                    const media = await MessageMedia.fromUrl(elementUrl)
+
+                    // console.log(media)
+
+                    client.sendMessage(msg.from, media)
+                    console.log('Image sent')
+                }
+            } catch (error) {
+                console.log(error)
+                return
+            }
+
+            break
+
         default:
 
             if (true) {
 
-                let chatHistory = readDataMessageJSON()
+                // let chatHistory = readDataMessageJSON()
 
 
                 let tempMsg = msg.body + '\n'

@@ -1,6 +1,5 @@
 node_modules
 !node_modules/whatsapp-web.js/src/util/Injected.js
-!!node_modules/**/Injected.js
 .wwebjs_auth
 .env
 assets/image/*

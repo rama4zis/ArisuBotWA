@@ -20,7 +20,6 @@ const openai = new OpenAIApi(configuration);
 const qrcode = require('qrcode-terminal')
 const badwords = require("indonesian-badwords");
 const { RemoveBgResult, RemoveBgError, removeBackgroundFromImageFile, removeBackgroundFromImageBase64 } = require("remove.bg");
-const { setTimeout } = require('timers');
 
 client.on('qr', (qr) => {
     qrcode.generate(qr, { small: true })

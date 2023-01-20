@@ -48,7 +48,7 @@ client.on('ready', async () => {
 client.initialize()
 
 // let moodBot = 'neutral'
-let tempChat = "Arisu is a chatbot bahasa Indonesia that reluctantly answers questions with sarcastic responses:\n\nSensei: "
+let tempChat = "Arisu is an Indonesian chatbot who answers questions reluctantly, he also likes to ask you small things and answers questions with sarcastic responses, sometimes he can get angry at you:\n\nSensei: "
 
 
 

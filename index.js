@@ -21,7 +21,6 @@ const qrcode = require('qrcode-terminal')
 const badwords = require("indonesian-badwords");
 const { RemoveBgResult, RemoveBgError, removeBackgroundFromImageFile, removeBackgroundFromImageBase64 } = require("remove.bg");
 const { setTimeout } = require('timers');
-const { json } = require('express');
 
 client.on('qr', (qr) => {
     qrcode.generate(qr, { small: true })
@@ -343,7 +342,7 @@ client.on('message', async (msg) => {
                     n: 1,
                     size: "512x512",
                 });
-                
+
                 for (let i = 0; i < response.data.data.length; i++) {
                     const element = response.data.data[i];
 

@@ -199,7 +199,7 @@ client.on('message', async (msg) => {
         *!sticker* - Kirim gambar sebagai sticker
         *!rmbg* - Remove background pada gambar
         *!mood* - Menampilkan mood Arisu saat ini
-        *!arisu* {request gambar} - Request gambar apapun ke Arisu 
+        *!arisu* {request gambar} - Arisu akan membuat gambar dari semua kata kunci yang kamu masukkan (Bukan mencari gambar!)
 
         - Jangan berkata kotor (coba aja deh)
         - Kamu bisa tanya arisu lagi ngapain
@@ -324,7 +324,7 @@ client.on('message', async (msg) => {
 
             msg.body = msg.body.replace('!arisu', '')
 
-            client.sendMessage(msg.from, 'Fitur ini diganti dengan meminta Arisu mengirimkan gambar')
+            client.sendMessage(msg.from, 'Fitur ini diganti, Arisu akan membuat gambar dari semua kata kunci yang kamu masukkan (Bukan mencari gambar!)')
 
             
 
@@ -332,7 +332,7 @@ client.on('message', async (msg) => {
 
             // console.log(response.data.data)
             // return
-            client.sendMessage(msg.from, 'Arisu sedang mencari gambar untukmu tunggu sebentar')
+            client.sendMessage(msg.from, 'Arisu sedang menhasilkan untukmu, tunggu sebentar')
 
             try {
 

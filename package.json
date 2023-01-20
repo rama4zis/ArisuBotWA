@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.0.3",
+    "exxpress": "^1.0.0",
     "indonesian-badwords": "^1.0.1",
     "node-base64-image": "^2.0.4",
     "openai": "^3.1.0",

@@ -73,7 +73,7 @@ class MessageChecker {
                 new Help(this.client, this.msgData).botInfo()
             break
 
-            case commandTitle === "Bot Creator":
+            case commandTitle === "Author Info":
                 new Help(this.client, this.msgData).botCreator()
             break
 

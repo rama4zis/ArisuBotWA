@@ -27,8 +27,6 @@ client.on('ready', async () => {
 })
 
 client.initialize()
-
-// let moodBot = 'neutral'
 // let tempChat = "Arisu is an Indonesian chatbot who answers questions reluctantly, he also likes to ask you small things and answers questions with sarcastic responses, sometimes he can get angry at you:\n\nSensei: "
 
 
@@ -36,12 +34,9 @@ const  MessageChecker  = require('./src/handler/messageChecker')
 
 client.on('message', async (msg) => {
 
-    // console.clear()
     let resut = new MessageChecker(client, msg)
     resut.checkMessage()
 
-    // cleaar console 
-    // console.log(msg)
     return
 
     

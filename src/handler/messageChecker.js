@@ -4,6 +4,8 @@ const RemoveBackground = require('../commands/removeBackground')
 const GenerateImage = require('../commands/generateImage')
 const DefaultReply = require('../commands/defaultReply')
 
+let { getTempChat, setTempChat } = require('../utils/globalVar')
+
 class MessageChecker {
     constructor(client, msgData, args = {}) {
         this.msgData = msgData
@@ -21,8 +23,6 @@ class MessageChecker {
 
         const message = this.message
         const commandTitle = this.listResponse
-
-        let tempChat = "Arisu is an Indonesian chatbot who answers questions reluctantly, she also likes to ask you small things and answers questions with sarcastic responses:\n\nSensei: "
 
         switch (true) {
 
@@ -46,11 +46,11 @@ class MessageChecker {
 
             case message === '!reset.admin':
                 this.client.sendMessage(this.msgData.from, 'Resetting temperory Arisu Chat history...')
-                tempChat = "Arisu is an Indonesian chatbot who answers questions reluctantly, she also likes to ask you small things and answers questions with sarcastic responses:\n\nSensei: "
+                setTempChat()
                 break
 
             case message === '!show.temp':
-                this.client.sendMessage(this.msgData.from, tempChat)
+                this.client.sendMessage(this.msgData.from, getTempChat())
                 break
 
             // ================== Main Features ==================
@@ -78,7 +78,7 @@ class MessageChecker {
             break
 
             default:
-                new DefaultReply(this.client, this.msgData, tempChat)
+                new DefaultReply(this.client, this.msgData, getTempChat())
                 break
 
         }

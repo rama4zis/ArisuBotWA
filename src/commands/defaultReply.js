@@ -5,6 +5,8 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
+const { updateTempChat } = require('../utils/globalVar')
+
 class DefaultReply {
     constructor(client, msgData, tempChat) {
         (async () => {
@@ -25,7 +27,9 @@ class DefaultReply {
 
             console.log('Sensei: ' + msgData.body + '\n')
             console.log('Arisu: ' + response.data.choices[0].text + '\n')
-            let information = "\n\n_Untuk melihat menu, ketik 'menu'_"
+            let information = "\n\n_Untuk melihat menu, ketik menu_"
+
+            updateTempChat(tempChat)
             return client.sendMessage(msgData.from, response.data.choices[0].text + information)
             // console.log('tempChat: ' + tempChat)
             // console.log(msg.from)

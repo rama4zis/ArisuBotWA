@@ -20,7 +20,7 @@ class DefaultReply {
                 top_p: 0.3,
                 frequency_penalty: 0.5,
                 presence_penalty: 0,
-                stop: ["Sensei", "Arisu"],
+                stop: ["Sensei:", "Arisu:"],
             });
 
             tempChat = tempChat + response.data.choices[0].text + '\nSensei: '

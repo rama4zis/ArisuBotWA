@@ -45,7 +45,7 @@ class Help {
                             // description: "Informasi mengenai bot",
                         },
                         {
-                            title: "Author",
+                            title: "Author Info",
                             // description: "Informasi mengenai pembuat bot",
                         }
                     ]
@@ -59,7 +59,7 @@ class Help {
     }
 
     botInfo() {
-        return this.client.sendMessage(this.from, "*Arisu Bot*\nVersion: 1.0.1\nLast Updadte: 21 January 2023\n")
+        return this.client.sendMessage(this.from, "*Arisu Bot*\nVersion: 1.0.1\nLast Updadte: 21 January 2023\n\nChange log:\n- Update personality Arisu\n- Fix language Indonesia\n- Temporary saving history chat\n\n*knwow bug*:\n-Turu 😴😴😴\n")
     }
 
     botCreator() {

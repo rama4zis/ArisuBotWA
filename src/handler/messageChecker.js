@@ -1,5 +1,6 @@
 const Help = require('../commands/help')
 const MakeSticker = require('../commands/makeSticker')
+const StickerNobg = require('../commands/stickerNobg')
 const RemoveBackground = require('../commands/removeBackground')
 const GenerateImage = require('../commands/generateImage')
 const DefaultReply = require('../commands/defaultReply')
@@ -25,6 +26,15 @@ class MessageChecker {
 
     async checkMessage() {
 
+        const admin = '6285856440266@c.us'
+        if (this.msgData.from === admin) {
+            // console.log("This is dev mode")
+        } else {
+            // exit process
+            // console.log("Normal Mode")
+            // return
+        }
+
         await this.sleep(3000) // Delay 3 seconds
         console.log("this code return after timout")
         const message = this.message
@@ -44,6 +54,10 @@ class MessageChecker {
                 new MakeSticker(this.client, this.msgData).generateSticker()
                 break
 
+            case message === '!sticker.nobg':
+                new StickerNobg(this.client, this.msgData).generateStickerNobg()
+                break
+
             case message === '!rmbg':
                 new RemoveBackground(this.client, this.msgData).generateRemoveBackground()
                 break
@@ -55,7 +69,7 @@ class MessageChecker {
                 setTempChat()
                 break
 
-            case message === '!show.temp':
+            case message === '!temp.chat':
                 this.client.sendMessage(this.msgData.from, getTempChat())
                 break
 
@@ -67,6 +81,10 @@ class MessageChecker {
 
             case commandTitle === 'Membuat Sticker':
                 new MakeSticker(this.client, this.msgData).infoSticker()
+                break
+
+            case commandTitle === 'Sticker No Background':
+                new StickerNobg(this.client, this.msgData).infoStickerNobg()
                 break
 
             case commandTitle === 'Remove Background':

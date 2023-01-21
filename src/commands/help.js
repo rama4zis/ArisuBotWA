@@ -20,18 +20,23 @@ class Help {
                 {
                     title: "Main Features",
                     rows: [
-                        {
-                            id: "1",
-                            title: "Generate Image",
-                            description: "Membuat gambar dari AI dengan menggunakan kata kunci yang diberikan (Bukan mencari gambar)",
-                        },
+                        // {
+                        //     id: "1",
+                        //     title: "Generate Image",
+                        //     description: "Membuat gambar dari AI dengan menggunakan kata kunci yang diberikan (Bukan mencari gambar)",
+                        // },
                         {
                             id: "2",
                             title: "Membuat Sticker",
                             description: "Membuat sticker dari gambar yang diupload",
                         },
+                        // {
+                        //     id: "3",
+                        //     title: "Sticker No Background",
+                        //     description: "Membuat sticker dari gambar yang diupload",
+                        // },
                         {
-                            id: "3",
+                            id: "4",
                             title: "Remove Background",
                             description: "Menghapus background dari gambar yang diupload",
                         }

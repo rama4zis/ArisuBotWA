@@ -1,4 +1,3 @@
-require('dotenv').config()
 const { Configuration, OpenAIApi } = require("openai")
 const { MessageMedia } = require('whatsapp-web.js')
 
@@ -21,7 +20,8 @@ class GenerateImage {
 
     async generateImage() {
         this.msgData.body = this.msgData.body.replace('!image ', '')
-        this.client.sendMessage(this.msgData.from, 'Arisu sedang menhasilkan untukmu, tunggu sebentar')
+        this.client.sendMessage(this.msgData.from, 'Fitur ini sementara tidak tersedia')
+        return
         try {
             const response = await openai.createImage({
                 prompt: this.msgData.body,

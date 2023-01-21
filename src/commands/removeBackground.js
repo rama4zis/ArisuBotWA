@@ -33,11 +33,12 @@ class RemoveBackground {
     }
 
     async generateRemoveBackground() {
-        const filePath = "./assets/image/result.jpg"
-
         if (this.msgData.hasMedia && this.msgData.type === 'image' && this.msgData.type !== 'video' && this.msgData.type !== 'gif') {
 
             try {
+                this.saveFileToLocal()
+                const filePath = "./assets/image/result.jpg"
+
                 await removeBackgroundFromImageFile({
                     path: filePath,
                     apiKey: process.env.REMOVE_BG_API_KEY,
@@ -54,13 +55,16 @@ class RemoveBackground {
                 this.client.sendMessage(this.msgData.from, exportMedia, {
                     sendMediaAsDocument: true,
                 })
+                this.client.sendMessage(this.msgData.from, exportMedia, {
+                    sendMediaAsSticker: true,
+                })
             } catch (error) {
                 console.log(error)
-
-                this.client.sendMessage(this.msgData.from, 'Contrast: Images taken under good lighting conditions and with a high contrast between foreground and background give better results.')
+                
+                this.client.sendMessage(this.msgData.from, 'Remove background telah digunakan terlalu banyak bulan ini')
                 return
             }
-            
+
         } else {
             this.client.sendMessage(this.msgData.from, 'Arisu hanya menerima gambar saja, bukan file lainnya!')
         }

@@ -18,12 +18,12 @@ client.on('qr', (qr) => {
 
 client.on('ready', async () => {
     console.log('Bot is ready!')
-    let newStatus = client.setStatus('Last Update 21 Jan 2023')
-    if (newStatus) {
-        console.log('Status telah diubah')
-    } else {
-        console.log('Status gagal diubah')
-    }
+    // let newStatus = client.setStatus('Last Update 21 Jan 2023')
+    // if (newStatus) {
+    //     console.log('Status telah diubah')
+    // } else {
+    //     console.log('Status gagal diubah')
+    // }
 })
 
 client.initialize()

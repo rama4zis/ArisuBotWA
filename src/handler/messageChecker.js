@@ -19,8 +19,14 @@ class MessageChecker {
         this.message = (msgData.body).toLowerCase()
     }
 
-    checkMessage() {
+    sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
+    async checkMessage() {
+
+        await this.sleep(3000) // Delay 3 seconds
+        console.log("this code return after timout")
         const message = this.message
         const commandTitle = this.listResponse
 
@@ -71,11 +77,11 @@ class MessageChecker {
 
             case commandTitle === "Bot Info":
                 new Help(this.client, this.msgData).botInfo()
-            break
+                break
 
             case commandTitle === "Author Info":
                 new Help(this.client, this.msgData).botCreator()
-            break
+                break
 
             default:
                 new DefaultReply(this.client, this.msgData, getTempChat())

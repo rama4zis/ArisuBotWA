@@ -26,7 +26,7 @@ class RemoveBackground {
         try {
             const buffer = new Buffer(media.data, 'base64')
 
-            return fs.createWriteStream(output, buffer)
+            return fs.writeFileSync(output, buffer)
         } catch (error) {
             console.log(error)
             return

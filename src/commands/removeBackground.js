@@ -62,7 +62,7 @@ class RemoveBackground {
             // return
             // remove file result 
             // await outputNobg.webp().toFile("result.webp")
-            await outputNobg.trim().png().toFile(`./assets/image/${nameUnique}-DataResult.png`)
+            await outputNobg.trim().resize(200).png().toFile(`./assets/image/${nameUnique}-DataResult.png`)
             // optionally you can use .trim() too!
             // await outputNobg.trim().webp().toFile(`./assets/image/trim-${nameUnique}-DataResult.webp`)
 

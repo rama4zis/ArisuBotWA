@@ -99,14 +99,14 @@ var RemoveBackground = /*#__PURE__*/function () {
               input = sharp(outputFile);
               _context2.prev = 9;
               rembg = new Rembg({
-                logging: true
+                logging: false
               });
               _context2.next = 13;
               return rembg.remove(input);
             case 13:
               outputNobg = _context2.sent;
               _context2.next = 16;
-              return outputNobg.trim().png().toFile("./assets/image/".concat(nameUnique, "-DataResult.png"));
+              return outputNobg.trim().resize(125).png().toFile("./assets/image/".concat(nameUnique, "-DataResult.png"));
             case 16:
               // optionally you can use .trim() too!
               // await outputNobg.trim().webp().toFile(`./assets/image/trim-${nameUnique}-DataResult.webp`)

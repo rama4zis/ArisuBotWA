@@ -53,12 +53,12 @@ class RemoveBackground {
 
         try {
             const rembg = new Rembg({
-                logging: true,
+                logging: false,
             })
 
             const outputNobg = await rembg.remove(input)
 
-            await outputNobg.trim().png().toFile(`./assets/image/${nameUnique}-DataResult.png`)
+            await outputNobg.trim().resize(125).png().toFile(`./assets/image/${nameUnique}-DataResult.png`)
             // optionally you can use .trim() too!
             // await outputNobg.trim().webp().toFile(`./assets/image/trim-${nameUnique}-DataResult.webp`)
 

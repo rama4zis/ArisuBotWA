@@ -26,7 +26,7 @@ class RemoveBackground {
         try {
             const buffer = new Buffer(media.data, 'base64')
 
-            return fs.writeFileSync(output, buffer)
+            return fs.createWriteStream(output, buffer)
         } catch (error) {
             console.log(error)
             return
@@ -58,10 +58,6 @@ class RemoveBackground {
 
             const outputNobg = await rembg.remove(input)
 
-            // console.log(input)
-            // return
-            // remove file result 
-            // await outputNobg.webp().toFile("result.webp")
             await outputNobg.trim().resize(200).png().toFile(`./assets/image/${nameUnique}-DataResult.png`)
             // optionally you can use .trim() too!
             // await outputNobg.trim().webp().toFile(`./assets/image/trim-${nameUnique}-DataResult.webp`)

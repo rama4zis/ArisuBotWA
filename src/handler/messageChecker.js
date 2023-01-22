@@ -58,7 +58,7 @@ class MessageChecker {
                 break
 
             case message === '!rmbg':
-                new RemoveBackground(this.client, this.msgData).generateRemoveBackground(true)
+                new RemoveBackground(this.client, this.msgData).generateRemoveBackground()
                 break
 
             // ================== Admin Command ==================

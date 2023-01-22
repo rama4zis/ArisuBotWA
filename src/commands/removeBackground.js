@@ -39,33 +39,33 @@ class RemoveBackground {
     }
 
     async generateRemoveBackground(toSticker = false) {
-        
+
         const media = await this.msgData.downloadMedia()
-        const outputFile = './assets/image/imageData.jpg'
+        const nameUnique = new Date().getTime()
+        const outputFile = `./assets/image/${nameUnique}-imageData.jpg`
         this.saveFileToLocal(media, outputFile)
 
         // waiting information 
         this.client.sendMessage(this.msgData.from, 'Mohon tunggu, sedang memproses gambar...')
 
-        this.removeFileLocal('./assets/image/imageDataResult.png')
         // optional arguments
-        const input = sharp('./assets/image/imageData.jpg')
+        const input = sharp(outputFile)
         const rembg = new Rembg({
             logging: true,
         })
-        
-        const output = await rembg.remove(input)
+
+        const outputNobg = await rembg.remove(input)
 
         // console.log(input)
         // return
         // remove file result 
-        // await output.webp().toFile("result.webp")
-        await output.trim().png().toFile('./assets/image/imageDataResult.png')
+        // await outputNobg.webp().toFile("result.webp")
+        await outputNobg.trim().png().toFile(`./assets/image/${nameUnique}-DataResult.png`)
         // optionally you can use .trim() too!
-        await output.trim().webp().toFile('./assets/image/trim-imageDataResult.webp')
+        // await outputNobg.trim().webp().toFile(`./assets/image/trim-${nameUnique}-DataResult.webp`)
 
         // get result Image file 
-        const resultImage = MessageMedia.fromFilePath('./assets/image/imageDataResult.png')
+        const resultImage = MessageMedia.fromFilePath(`./assets/image/${nameUnique}-DataResult.png`)
 
         if (toSticker) {
             this.client.sendMessage(this.msgData.from, resultImage, {
@@ -76,7 +76,10 @@ class RemoveBackground {
                 sendMediaAsDocument: true,
             })
         }
-        // this.removeFileLocal(outputFile)
+
+        // delete temp file 
+        this.removeFileLocal(outputFile)
+        this.removeFileLocal(`./assets/image/${nameUnique}-DataResult.png`)
 
     }
 }

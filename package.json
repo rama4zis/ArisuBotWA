@@ -12,7 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.0.3",
-    "exxpress": "^1.0.0",
+    "express": "^1.0.0",
     "indonesian-badwords": "^1.0.1",
     "node-base64-image": "^2.0.4",
     "openai": "^3.1.0",
@@ -20,7 +20,6 @@
     "rembg-node": "^2.0.1",
     "remove.bg": "^1.3.0",
     "sharp": "^0.31.3",
-    "webp-converter": "^2.3.3",
     "whatsapp-web.js": "github:pedroslopez/whatsapp-web.js#fix-buttons-list"
   },
   "devDependencies": {

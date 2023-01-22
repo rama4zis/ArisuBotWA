@@ -46,12 +46,12 @@ client.on('message', async (msg) => {
 
             client.sendMessage(msg.from, 'Arisu tidak suka dengan kata-kata kasar, jangan kasar ya! 😠👊')
 
-            const media = MessageMedia.fromFilePath('./assets/sound/Arisu_ExSkill_Level_3.mp3')
+            const media = MessageMedia.fromFilePath('./src/assets/sound/Arisu_ExSkill_Level_3.mp3')
             client.sendMessage(msg.from, media, {
                 sendAudioAsVoice: true
             })
 
-            // const mediaVideo = MessageMedia.fromFilePath('./assets/arisuEX.mp4')
+            // const mediaVideo = MessageMedia.fromFilePath('./src/assets/arisuEX.mp4')
             // client.sendMessage(msg.from, mediaVideo, {
             //     sendVideoAsGif: true
             // })
@@ -79,7 +79,7 @@ client.on('message', async (msg) => {
 
                 reply = "Arisu juga pengen kopi Sensei, belikan Arisu kopi dong..."
                 client.sendMessage(msg.from, reply)
-                const media = MessageMedia.fromFilePath('./assets/sound/Arisu_Cafe_Act_2.mp3')
+                const media = MessageMedia.fromFilePath('./src/assets/sound/Arisu_Cafe_Act_2.mp3')
                 client.sendMessage(msg.from, media, {
                     sendAudioAsVoice: true
                 })
@@ -89,7 +89,7 @@ client.on('message', async (msg) => {
 
                 reply = "Arisu lagi rebahan, soalnya udah capek banget. Sensei juga gabut banget tanyain Arisu segala."
                 client.sendMessage(msg.from, reply)
-                const media2 = MessageMedia.fromFilePath('./assets/sound/Arisu_Cafe_Act_3.mp3')
+                const media2 = MessageMedia.fromFilePath('./src/assets/sound/Arisu_Cafe_Act_3.mp3')
                 client.sendMessage(msg.from, media2, {
                     sendAudioAsVoice: true
                 })
@@ -99,7 +99,7 @@ client.on('message', async (msg) => {
 
                 reply = "Arisu sebenernya pengen dimanjain sama Sensei, tapi Sensei selalu skip banner aku. Jadi hari ini, tolong elus elusin Arisu ya."
                 client.sendMessage(msg.from, reply)
-                const media3 = MessageMedia.fromFilePath('./assets/sound/Arisu_Cafe_Act_5.mp3')
+                const media3 = MessageMedia.fromFilePath('./src/assets/sound/Arisu_Cafe_Act_5.mp3')
                 client.sendMessage(msg.from, media3, {
                     sendAudioAsVoice: true
                 })
@@ -109,7 +109,7 @@ client.on('message', async (msg) => {
 
                 reply = "Arisu laper banget Sensei, suapin Arisu makanan dong...."
                 client.sendMessage(msg.from, reply)
-                const media4 = MessageMedia.fromFilePath('./assets/sound/Arisu_Lobby_2.mp3')
+                const media4 = MessageMedia.fromFilePath('./src/assets/sound/Arisu_Lobby_2.mp3')
                 client.sendMessage(msg.from, media4, {
                     sendAudioAsVoice: true
                 })

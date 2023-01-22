@@ -42,7 +42,7 @@ class RemoveBackground {
 
         const media = await this.msgData.downloadMedia()
         const nameUnique = new Date().getTime()
-        const outputFile = `./assets/image/${nameUnique}-imageData.jpg`
+        const outputFile = `./src/assets/image/${nameUnique}-imageData.jpg`
         this.saveFileToLocal(media, outputFile)
 
         // waiting information 
@@ -58,16 +58,18 @@ class RemoveBackground {
 
             const outputNobg = await rembg.remove(input)
 
-            await outputNobg.trim().resize(125).png().toFile(`./assets/image/${nameUnique}-DataResult.png`)
+            await outputNobg.trim().resize(125).png().toFile(`./src/assets/image/${nameUnique}-DataResult.png`)
             // optionally you can use .trim() too!
-            // await outputNobg.trim().webp().toFile(`./assets/image/trim-${nameUnique}-DataResult.webp`)
+            // await outputNobg.trim().webp().toFile(`./src/assets/image/trim-${nameUnique}-DataResult.webp`)
 
             // get result Image file 
-            const resultImage = MessageMedia.fromFilePath(`./assets/image/${nameUnique}-DataResult.png`)
+            const resultImage = MessageMedia.fromFilePath(`./src/assets/image/${nameUnique}-DataResult.png`)
 
             if (toSticker) {
                 this.client.sendMessage(this.msgData.from, resultImage, {
                     sendMediaAsSticker: true,
+                    stickerAuthor: '+62 895-4139-26068',
+                    stickerName: 'Arisu Chatbot'
                 })
             } else {
                 this.client.sendMessage(this.msgData.from, resultImage, {
@@ -77,7 +79,7 @@ class RemoveBackground {
 
             // delete temp file 
             this.removeFileLocal(outputFile)
-            this.removeFileLocal(`./assets/image/${nameUnique}-DataResult.png`)
+            this.removeFileLocal(`./src/assets/image/${nameUnique}-DataResult.png`)
         } catch (error) {
             console.log(error)
         }

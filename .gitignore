@@ -2,5 +2,7 @@ node_modules
 !node_modules/whatsapp-web.js/src/util/Injected.js
 .wwebjs_auth
 .env
-assets/image/*
+src/assets/image/*
+!src/assets/image/Arisu.png
 dist/
+build/

@@ -50,36 +50,41 @@ class RemoveBackground {
 
         // optional arguments
         const input = sharp(outputFile)
-        const rembg = new Rembg({
-            logging: true,
-        })
 
-        const outputNobg = await rembg.remove(input)
-
-        // console.log(input)
-        // return
-        // remove file result 
-        // await outputNobg.webp().toFile("result.webp")
-        await outputNobg.trim().png().toFile(`./assets/image/${nameUnique}-DataResult.png`)
-        // optionally you can use .trim() too!
-        // await outputNobg.trim().webp().toFile(`./assets/image/trim-${nameUnique}-DataResult.webp`)
-
-        // get result Image file 
-        const resultImage = MessageMedia.fromFilePath(`./assets/image/${nameUnique}-DataResult.png`)
-
-        if (toSticker) {
-            this.client.sendMessage(this.msgData.from, resultImage, {
-                sendMediaAsSticker: true,
+        try {
+            const rembg = new Rembg({
+                logging: true,
             })
-        } else {
-            this.client.sendMessage(this.msgData.from, resultImage, {
-                sendMediaAsDocument: true,
-            })
+
+            const outputNobg = await rembg.remove(input)
+
+            // console.log(input)
+            // return
+            // remove file result 
+            // await outputNobg.webp().toFile("result.webp")
+            await outputNobg.trim().png().toFile(`./assets/image/${nameUnique}-DataResult.png`)
+            // optionally you can use .trim() too!
+            // await outputNobg.trim().webp().toFile(`./assets/image/trim-${nameUnique}-DataResult.webp`)
+
+            // get result Image file 
+            const resultImage = MessageMedia.fromFilePath(`./assets/image/${nameUnique}-DataResult.png`)
+
+            if (toSticker) {
+                this.client.sendMessage(this.msgData.from, resultImage, {
+                    sendMediaAsSticker: true,
+                })
+            } else {
+                this.client.sendMessage(this.msgData.from, resultImage, {
+                    sendMediaAsDocument: true,
+                })
+            }
+
+            // delete temp file 
+            this.removeFileLocal(outputFile)
+            this.removeFileLocal(`./assets/image/${nameUnique}-DataResult.png`)
+        } catch (error) {
+            console.log(error)
         }
-
-        // delete temp file 
-        this.removeFileLocal(outputFile)
-        this.removeFileLocal(`./assets/image/${nameUnique}-DataResult.png`)
 
     }
 }

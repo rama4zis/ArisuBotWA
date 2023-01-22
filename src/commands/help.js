@@ -30,11 +30,11 @@ class Help {
                             title: "Membuat Sticker",
                             description: "Membuat sticker dari gambar yang diupload",
                         },
-                        // {
-                        //     id: "3",
-                        //     title: "Sticker No Background",
-                        //     description: "Membuat sticker dari gambar yang diupload",
-                        // },
+                        {
+                            id: "3",
+                            title: "Sticker No Background",
+                            description: "Membuat sticker dari gambar yang diupload",
+                        },
                         {
                             id: "4",
                             title: "Remove Background",

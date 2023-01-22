@@ -1,6 +1,9 @@
 const fs = require('fs')
 const { MessageMedia } = require('whatsapp-web.js')
-const { removeBackgroundFromImageFile } = require('remove.bg')
+// const { removeBackgroundFromImageFile } = require('remove.bg')
+
+const { Rembg } = require("rembg-node")
+const sharp = require("sharp")
 
 class RemoveBackground {
     constructor(client, msgData) {
@@ -12,62 +15,68 @@ class RemoveBackground {
         this.client.sendMessage(this.msgData.from, 'Untuk menghapus background, silahkan kirim gambar dengan caption *!rmbg*')
     }
 
-    async saveFileToLocal() {
-        const media = await this.msgData.downloadMedia();
+    infoStickerNobg() {
+        return (this.client).sendMessage((this.msgData).from, 'Untuk membuat sticker, silahkan kirim gambar dengan caption *!sticker.nobg*')
+    }
+
+    async saveFileToLocal(input, output) {
+        const media = input
 
         // save image to local
         try {
             const buffer = new Buffer(media.data, 'base64')
 
-            return fs.writeFileSync('./assets/image/result.jpg', buffer)
+            return fs.writeFileSync(output, buffer)
         } catch (error) {
             console.log(error)
             return
         }
     }
 
-    removeFileLocal(filePath, exportMedia) {
+    removeFileLocal(filePath) {
         // then remove image from local storage
         fs.unlinkSync(filePath)
-        fs.unlinkSync(exportMedia)
     }
 
-    async generateRemoveBackground() {
-        if (this.msgData.hasMedia && this.msgData.type === 'image' && this.msgData.type !== 'video' && this.msgData.type !== 'gif') {
+    async generateRemoveBackground(toSticker = false) {
+        
+        const media = await this.msgData.downloadMedia()
+        const outputFile = './assets/image/imageData.jpg'
+        this.saveFileToLocal(media, outputFile)
 
-            try {
-                this.saveFileToLocal()
-                const filePath = "./assets/image/result.jpg"
+        // waiting information 
+        this.client.sendMessage(this.msgData.from, 'Mohon tunggu, sedang memproses gambar...')
 
-                await removeBackgroundFromImageFile({
-                    path: filePath,
-                    apiKey: process.env.REMOVE_BG_API_KEY,
-                    size: "auto",
-                    type: "person",
-                    crop: false,
-                    scale: "original",
-                    format: "png",
-                    outputFile: "./assets/image/hasilEditArisu.png",
-                });
+        this.removeFileLocal('./assets/image/imageDataResult.png')
+        // optional arguments
+        const input = sharp('./assets/image/imageData.jpg')
+        const rembg = new Rembg({
+            logging: true,
+        })
+        
+        const output = await rembg.remove(input)
 
-                const exportMedia = MessageMedia.fromFilePath("./assets/image/hasilEditArisu.png")
+        // console.log(input)
+        // return
+        // remove file result 
+        // await output.webp().toFile("result.webp")
+        await output.trim().png().toFile('./assets/image/imageDataResult.png')
+        // optionally you can use .trim() too!
+        await output.trim().webp().toFile('./assets/image/trim-imageDataResult.webp')
 
-                this.client.sendMessage(this.msgData.from, exportMedia, {
-                    sendMediaAsDocument: true,
-                })
-                this.client.sendMessage(this.msgData.from, exportMedia, {
-                    sendMediaAsSticker: true,
-                })
-            } catch (error) {
-                console.log(error)
-                
-                this.client.sendMessage(this.msgData.from, 'Remove background telah digunakan terlalu banyak bulan ini')
-                return
-            }
+        // get result Image file 
+        const resultImage = MessageMedia.fromFilePath('./assets/image/imageDataResult.png')
 
+        if (toSticker) {
+            this.client.sendMessage(this.msgData.from, resultImage, {
+                sendMediaAsSticker: true,
+            })
         } else {
-            this.client.sendMessage(this.msgData.from, 'Arisu hanya menerima gambar saja, bukan file lainnya!')
+            this.client.sendMessage(this.msgData.from, resultImage, {
+                sendMediaAsDocument: true,
+            })
         }
+        // this.removeFileLocal(outputFile)
 
     }
 }

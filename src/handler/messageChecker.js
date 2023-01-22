@@ -1,6 +1,5 @@
 const Help = require('../commands/help')
 const MakeSticker = require('../commands/makeSticker')
-const StickerNobg = require('../commands/stickerNobg')
 const RemoveBackground = require('../commands/removeBackground')
 const GenerateImage = require('../commands/generateImage')
 const DefaultReply = require('../commands/defaultReply')
@@ -28,10 +27,10 @@ class MessageChecker {
 
         const admin = '6285856440266@c.us'
         if (this.msgData.from === admin) {
-            // console.log("This is dev mode")
+            console.log("This is dev mode")
         } else {
             // exit process
-            // console.log("Normal Mode")
+            console.log("Normal Mode")
             // return
         }
 
@@ -55,11 +54,11 @@ class MessageChecker {
                 break
 
             case message === '!sticker.nobg':
-                new StickerNobg(this.client, this.msgData).generateStickerNobg()
+                new RemoveBackground(this.client, this.msgData).generateRemoveBackground(true)
                 break
 
             case message === '!rmbg':
-                new RemoveBackground(this.client, this.msgData).generateRemoveBackground()
+                new RemoveBackground(this.client, this.msgData).generateRemoveBackground(true)
                 break
 
             // ================== Admin Command ==================
@@ -84,7 +83,7 @@ class MessageChecker {
                 break
 
             case commandTitle === 'Sticker No Background':
-                new StickerNobg(this.client, this.msgData).infoStickerNobg()
+                new RemoveBackground(this.client, this.msgData).infoStickerNobg()
                 break
 
             case commandTitle === 'Remove Background':

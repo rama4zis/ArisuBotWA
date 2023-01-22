@@ -46,7 +46,7 @@ class RemoveBackground {
         this.saveFileToLocal(media, outputFile)
 
         // waiting information 
-        this.client.sendMessage(this.msgData.from, 'Mohon tunggu, sedang memproses gambar...')
+        this.client.sendMessage(this.msgData.from, 'This feature is still in development')
 
         // optional arguments
         const input = sharp(outputFile)
@@ -58,7 +58,7 @@ class RemoveBackground {
 
             const outputNobg = await rembg.remove(input)
 
-            await outputNobg.trim().resize(100).png().toFile(`./assets/image/${nameUnique}-DataResult.png`)
+            await outputNobg.trim().png().toFile(`./assets/image/${nameUnique}-DataResult.png`)
             // optionally you can use .trim() too!
             // await outputNobg.trim().webp().toFile(`./assets/image/trim-${nameUnique}-DataResult.webp`)
 

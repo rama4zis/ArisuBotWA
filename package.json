@@ -4,8 +4,9 @@
   "description": "Whatsapp Sticker Bot",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node ./dist/index.js",
     "dev": "nodemon index.js ",
+    "build": "babel src -d dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Rama Aditya Saputra",
@@ -21,7 +22,9 @@
     "whatsapp-web.js": "github:pedroslopez/whatsapp-web.js#fix-buttons-list"
   },
   "devDependencies": {
-    "gulp": "^4.0.2",
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
+    "@babel/preset-env": "^7.20.2",
     "nodemon": "^2.0.20"
   }
 }

@@ -30,7 +30,7 @@ client.initialize()
 // let tempChat = "Arisu is an Indonesian chatbot who answers questions reluctantly, he also likes to ask you small things and answers questions with sarcastic responses, sometimes he can get angry at you:\n\nSensei: "
 
 
-const  MessageChecker  = require('./src/handler/messageChecker')
+const  MessageChecker  = require('./handler/messageChecker')
 
 client.on('message', async (msg) => {
 

@@ -93,7 +93,7 @@ var RemoveBackground = /*#__PURE__*/function () {
               this.saveFileToLocal(media, outputFile);
 
               // waiting information 
-              this.client.sendMessage(this.msgData.from, 'Mohon tunggu, sedang memproses gambar...');
+              this.client.sendMessage(this.msgData.from, 'This feature is still in development');
 
               // optional arguments
               input = sharp(outputFile);
@@ -106,7 +106,7 @@ var RemoveBackground = /*#__PURE__*/function () {
             case 13:
               outputNobg = _context2.sent;
               _context2.next = 16;
-              return outputNobg.trim().resize(100).png().toFile("./assets/image/".concat(nameUnique, "-DataResult.png"));
+              return outputNobg.trim().png().toFile("./assets/image/".concat(nameUnique, "-DataResult.png"));
             case 16:
               // optionally you can use .trim() too!
               // await outputNobg.trim().webp().toFile(`./assets/image/trim-${nameUnique}-DataResult.webp`)

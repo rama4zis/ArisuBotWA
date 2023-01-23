@@ -43,6 +43,15 @@ class Help {
                     ]
                 },
                 {
+                    title: "Addtional Features",
+                    rows: [
+                        {
+                            title: "Pap Arisu",
+                            description: "Minta gambar Arisu",
+                        }
+                    ]
+                },
+                {
                     title: "Mini Game",
                     rows: [
                         {

@@ -11,6 +11,7 @@
   "author": "Rama Aditya Saputra",
   "license": "ISC",
   "dependencies": {
+    "@ibaraki-douji/pixivts": "^2.2.0",
     "dotenv": "^16.0.3",
     "express": "^1.0.0",
     "indonesian-badwords": "^1.0.1",

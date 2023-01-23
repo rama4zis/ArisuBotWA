@@ -3,6 +3,7 @@ const MakeSticker = require('../commands/makeSticker')
 const RemoveBackground = require('../commands/removeBackground')
 const GenerateImage = require('../commands/generateImage')
 const DefaultReply = require('../commands/defaultReply')
+const PapArisu = require('../commands/papArisu')
 
 let { getTempChat, setTempChat } = require('../utils/globalVar')
 const RockPaper = require('../commands/mini-game/rockPaper')
@@ -44,6 +45,19 @@ class MessageChecker {
 
 
         switch (true) {
+
+            // ================== Halo Arisu ==================
+
+            case message === 'halo arisu' || message === 'hai arisu' || message === 'hi arisu' || message === 'hello arisu' || message === 'halo' || message === 'hai' || message === 'hi' || message === 'hello':
+                const chat = await this.msgData.getChat();
+                const contact = await this.msgData.getContact();
+
+                await chat.sendMessage(`Hai @${contact.id.user}`, {
+                    mentions: [contact]
+                });
+                break
+
+            // ================== Normal ==================
 
             case message === 'menu' || message === 'help' || message === 'commands':
                 new Help(this.client, this.msgData).defaultList()
@@ -92,6 +106,12 @@ class MessageChecker {
 
             case commandTitle === 'Remove Background':
                 new RemoveBackground(this.client, this.msgData).infoRemoveBackground()
+                break
+
+            // ======================== Addtional Features ========================
+
+            case commandTitle === 'Pap Arisu':
+                new PapArisu(this.client, this.msgData).getPapArisu()
                 break
 
             // ======================== MINI GAME ========================

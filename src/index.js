@@ -34,7 +34,9 @@ const  MessageChecker  = require('./handler/messageChecker')
 
 client.on('message', async (msg) => {
 
-    let resut = new MessageChecker(client, msg)
+    // console.log('Get Quote Data from user: ', await msg.getQuotedMessage())
+    const quoteData = await msg.getQuotedMessage()
+    let resut = new MessageChecker(client, msg, quoteData)
     resut.checkMessage()
 
     return

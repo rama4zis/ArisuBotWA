@@ -5,9 +5,10 @@ const GenerateImage = require('../commands/generateImage')
 const DefaultReply = require('../commands/defaultReply')
 
 let { getTempChat, setTempChat } = require('../utils/globalVar')
+const RockPaper = require('../commands/mini-game/rockPaper')
 
 class MessageChecker {
-    constructor(client, msgData, args = {}) {
+    constructor(client, msgData, quoteData) {
         this.msgData = msgData
         // console.log(msgData)
         this.listResponse = msgData._data.listResponse ? msgData._data.listResponse : null
@@ -17,6 +18,7 @@ class MessageChecker {
 
         this.client = client
         this.message = (msgData.body).toLowerCase()
+        this.quoteData = quoteData
     }
 
     sleep(ms) {
@@ -38,6 +40,8 @@ class MessageChecker {
         console.log("this code return after timout")
         const message = this.message
         const commandTitle = this.listResponse
+
+
 
         switch (true) {
 
@@ -88,6 +92,19 @@ class MessageChecker {
 
             case commandTitle === 'Remove Background':
                 new RemoveBackground(this.client, this.msgData).infoRemoveBackground()
+                break
+
+            // ======================== MINI GAME ========================
+
+            case (this.msgData.hasQuotedMsg && this.quoteData.title === 'Gunting Batu Kertas'):
+
+                const userInput = this.msgData.body
+                new RockPaper(this.client, this.msgData).rockPaperRun(userInput)
+
+                break
+
+            case commandTitle === 'Gunting Batu Kertas':
+                new RockPaper(this.client, this.msgData).rockPaperInfo()
                 break
 
             // ================== Information ==================

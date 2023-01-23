@@ -17,6 +17,7 @@
     "openai": "^3.1.0",
     "qrcode-terminal": "^0.12.0",
     "rembg-node": "github:rama4zis/rembg-node",
+    "rock-paper-scissors-ml": "^1.1.0",
     "sharp": "^0.31.3",
     "whatsapp-web.js": "github:pedroslopez/whatsapp-web.js#fix-buttons-list"
   },

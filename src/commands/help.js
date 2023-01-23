@@ -43,6 +43,14 @@ class Help {
                     ]
                 },
                 {
+                    title: "Mini Game",
+                    rows: [
+                        {
+                            title: "Gunting Batu Kertas"
+                        }
+                    ]
+                },
+                {
                     title: "Information",
                     rows: [
                         {
@@ -64,11 +72,11 @@ class Help {
     }
 
     botInfo() {
-        return this.client.sendMessage(this.from, "*Arisu Bot*\nVersion: 1.0.1\nLast Updadte: 21 January 2023\n\nChange log:\n- Update personality Arisu\n- Fix language Indonesia\n- Temporary saving history chat\n\n*knwow bug*:\n- Remove Background cannot use\n- Sticker No Background cannot use")
+        return this.client.sendMessage(this.from, "*Arisu Bot*\nVersion: 1.0.2\nLast Updadte: 22 January 2023\n\nChange log:\n- Add Rock Paper game\n\n*knwow bug*:\n- Remove Background cannot use(Server memory not enough 😭)\n- Sticker No Background cannot use(Server memory not enough 😭)")
     }
 
     botCreator() {
-        return this.client.sendMessage(this.from, "*Author Information*\nName: Rama Aditya Saputra\nFacebook: https://www.facebook.com\nContact: 085856440266")
+        return this.client.sendMessage(this.from, "*Author Information*\nName: Rama Aditya Saputra\n\nFacebook: https://www.facebook.com/rama4zis\n\nContact: 085856440266")
     }
 
 }

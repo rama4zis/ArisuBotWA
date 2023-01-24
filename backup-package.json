@@ -2,11 +2,12 @@
   "name": "wa-sticker-bot",
   "version": "1.0.0",
   "description": "Whatsapp Sticker Bot",
-  "main": "index.js",
+  "private": true,
   "scripts": {
     "start": "node ./src/index.js",
     "dev": "nodemon ./src/index.js ",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
   },
   "author": "Rama Aditya Saputra",
   "license": "ISC",
@@ -14,6 +15,7 @@
     "@ibaraki-douji/pixivts": "^2.2.0",
     "dotenv": "^16.0.3",
     "express": "^1.0.0",
+    "indonesian-badwords": "^1.0.1",
     "openai": "^3.1.0",
     "qrcode-terminal": "^0.12.0",
     "rembg-node": "github:rama4zis/rembg-node",

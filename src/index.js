@@ -10,7 +10,6 @@ const client = new Client({
 require('dotenv').config()
 
 const qrcode = require('qrcode-terminal')
-const badwords = require("indonesian-badwords");
 client.on('qr', (qr) => {
     qrcode.generate(qr, { small: true })
     console.log('Alternative QR RECEIVED : ', qr)
@@ -36,8 +35,8 @@ client.on('message', async (msg) => {
 
     // console.log('Get Quote Data from user: ', await msg.getQuotedMessage())
     const quoteData = await msg.getQuotedMessage()
-    let resut = new MessageChecker(client, msg, quoteData)
-    resut.checkMessage()
+    let result = new MessageChecker(client, msg, quoteData)
+    await result.checkMessage()
 
     return
 

@@ -70,12 +70,12 @@ class MessageChecker {
             case message === '!sticker':
 
                 this.client.sendMessage(this.msgData.from, "This will take for a while, please wait...")
-                new Promise(async (resolve) => {
+                new Promise((resolve, reject) => {
                     setTimeout(() => {
-                        resolve()
-                    }, 3000)
+                        resolve(new MakeSticker(this.client, this.msgData).generateSticker())
+                    }, 5000)
                 })
-                await new MakeSticker(this.client, this.msgData).generateSticker()
+                // await new MakeSticker(this.client, this.msgData).generateSticker()
                 break
 
             case message === '!sticker.nobg':

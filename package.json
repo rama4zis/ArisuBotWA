@@ -19,6 +19,7 @@
     "rembg-node": "github:rama4zis/rembg-node",
     "rock-paper-scissors-ml": "^1.1.0",
     "sharp": "^0.31.3",
+    "tiktok-scraper": "^1.4.36",
     "whatsapp-web.js": "github:pedroslopez/whatsapp-web.js#fix-buttons-list"
   },
   "devDependencies": {

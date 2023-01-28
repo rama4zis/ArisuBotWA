@@ -4,6 +4,7 @@ const RemoveBackground = require('../commands/removeBackground')
 const GenerateImage = require('../commands/generateImage')
 const DefaultReply = require('../commands/defaultReply')
 const PapArisu = require('../commands/papArisu')
+const TiktokDl = require('../commands/tiktokDl')
 
 let { getTempChat, setTempChat } = require('../utils/globalVar')
 const RockPaper = require('../commands/mini-game/rockPaper')
@@ -34,7 +35,8 @@ class MessageChecker {
         } else {
             // exit process
             console.log("Normal Mode")
-            // return
+            this.client.sendMessage(this.msgData.from, "Still maintenance, please wait...")
+            return
         }
 
         await this.sleep(3000) // Delay 3 seconds
@@ -88,6 +90,12 @@ class MessageChecker {
                 this.client.sendMessage(this.msgData.from, 'This feature is still in development')
                 break
 
+            case message.startsWith('!tiktok'):
+                // cut message command
+                const urlMessage = message.replace('!tiktok ', '')
+                new TiktokDl(this.client, this.msgData).downloadTikTok(urlMessage)
+                break
+
             // ================== Admin Command ==================
 
             case message === '!reset.admin':
@@ -115,6 +123,10 @@ class MessageChecker {
 
             case commandTitle === 'Remove Background':
                 new RemoveBackground(this.client, this.msgData).infoRemoveBackground()
+                break
+
+            case commandTitle === 'TikTok Downloader':
+                new TiktokDl(this.client, this.msgData).infoTiktok()
                 break
 
             // ======================== Addtional Features ========================

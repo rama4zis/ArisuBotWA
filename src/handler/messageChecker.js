@@ -34,8 +34,8 @@ class MessageChecker {
         } else {
             // exit process
             console.log("Normal Mode")
-            this.client.sendMessage(this.msgData.from, "Still maintenance, please wait...")
-            return
+            // this.client.sendMessage(this.msgData.from, "Still maintenance, please wait...")
+            // return
         }
 
         await this.sleep(3000) // Delay 3 seconds

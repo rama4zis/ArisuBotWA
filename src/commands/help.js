@@ -80,7 +80,7 @@ class Help {
  Menu list:
 - Membut Sticker : Untuk membuat sticker, silahkan kirim gambar dengan caption *!sticker*
 - Sticker No Background : Untuk membuat sticker tanpa background, silahkan kirim gambar dengan caption *!sticker.nobg*
-- Remove Background : Untuk menghapus background dari gambar, silahkan kirim gambar dengan caption *!remove.bg*
+- Remove Background : Untuk menghapus background dari gambar, silahkan kirim gambar dengan caption *!rmbg*
             `
 
         const list = new List('Klik menu untuk melihat keseluruhan', 'MENU', section, '', '') // (Body, ButtonText, Sections, Title, FooterText)

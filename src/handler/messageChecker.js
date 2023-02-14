@@ -80,13 +80,13 @@ class MessageChecker {
                 break
 
             case message === '!sticker.nobg':
-                // new RemoveBackground(this.client, this.msgData).generateRemoveBackground(true)
-                this.client.sendMessage(this.msgData.from, 'This feature is still in development')
+                new RemoveBackground(this.client, this.msgData).generateRemoveBackground(true)
+                // this.client.sendMessage(this.msgData.from, 'This feature is still in development')
                 break
 
             case message === '!rmbg':
-                // new RemoveBackground(this.client, this.msgData).generateRemoveBackground()
-                this.client.sendMessage(this.msgData.from, 'This feature is still in development')
+                new RemoveBackground(this.client, this.msgData).generateRemoveBackground()
+                // this.client.sendMessage(this.msgData.from, 'This feature is still in development')
                 break
 
             // ================== Admin Command ==================

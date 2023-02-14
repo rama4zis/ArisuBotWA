@@ -46,7 +46,7 @@ class RemoveBackground {
         this.saveFileToLocal(media, outputFile)
 
         // waiting information 
-        this.client.sendMessage(this.msgData.from, 'This feature is still in development')
+        // this.client.sendMessage(this.msgData.from, 'This feature is still in development')
 
         // optional arguments
         const input = sharp(outputFile)

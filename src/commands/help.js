@@ -74,14 +74,23 @@ class Help {
                 }
             ]
 
+            // parse section into json format
+            const manualMenu = `
+*Arisu Bot*
+ Menu list:
+- Membut Sticker : Untuk membuat sticker, silahkan kirim gambar dengan caption *!sticker*
+- Sticker No Background : Untuk membuat sticker tanpa background, silahkan kirim gambar dengan caption *!sticker.nobg*
+- Remove Background : Untuk menghapus background dari gambar, silahkan kirim gambar dengan caption *!remove.bg*
+            `
+
         const list = new List('Klik menu untuk melihat keseluruhan', 'MENU', section, '', '') // (Body, ButtonText, Sections, Title, FooterText)
 
-        return this.client.sendMessage(this.from, list)
+        return this.client.sendMessage(this.from, manualMenu)
 
     }
 
     botInfo() {
-        return this.client.sendMessage(this.from, "*Arisu Bot*\nVersion: 1.0.2\nLast Updadte: 22 January 2023\n\nChange log:\n- Add Rock Paper game\n\n*knwow bug*:\n- Remove Background cannot use(Server memory not enough 😭)\n- Sticker No Background cannot use(Server memory not enough 😭)")
+        return this.client.sendMessage(this.from, "*Arisu Bot*\nVersion: 1.1.0\nLast Updadte: 14 February 2023\n\nChange log:\n- Disable paper rock\n- Remove Background ON\n\n*knwow bug*:\n- Can't send List Type)")
     }
 
     botCreator() {
